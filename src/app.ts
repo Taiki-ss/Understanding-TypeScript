@@ -1,58 +1,30 @@
-// const names:Array<string>=[]
+// デコレーター
 
-// names[0].split(' ')
-
-const merge = <T extends {}, U>(objA: T, objB: U) => {
-  return Object.assign(objA, objB);
+const Logger = (logString: string) => {
+  return (constructor: Function) => {
+    console.log(logString);
+    console.log(constructor);
+  };
 };
 
-const mergedObj = merge({ name: "Max" }, { age: 30 });
-console.log(mergedObj);
-
-interface Lengthy {
-  length: number;
-}
-
-const countAndDescribe = <T extends Lengthy>(element: T) => {
-  const descriptionText =
-    element.length > 0 ? `値は${element.length}個です。` : "値がありません";
-  return [element, descriptionText];
+const WithTemplate = (template: string, hookId: string) => {
+  return (_: Function) => {
+    const hookEl = document.getElementById(hookId);
+    if (hookEl) {
+      hookEl.innerHTML = template;
+    }
+  };
 };
 
-console.log(countAndDescribe("お疲れさまでした。"));
-console.log(countAndDescribe(["1こ", "２こ"]));
+// @Logger('ログ出力中 - PERSON')
+@WithTemplate("<h1>Personオブジェクト</h1>", "app")
+class Person {
+  name = "taiki";
 
-const extactAndConvert = <T extends Object, U extends keyof T>(
-  obj: T,
-  key: U
-) => {
-  return "Value: " + obj[key];
-};
-
-extactAndConvert({ name: "taiki" }, "name");
-
-class DataStrage<T> {
-  private data: T[] = [];
-
-  addItem(item: T) {
-    this.data.push(item);
-  }
-
-  removeItem(item: T) {
-    console.log(this.data.indexOf(item));
-    if (this.data.indexOf(item) < 0) return;
-    this.data.splice(this.data.indexOf(item), 1);
-  }
-
-  getItems() {
-    return [...this.data];
+  constructor() {
+    console.log("Personオブジェクトを作成中...");
   }
 }
 
-const stringStrage = new DataStrage<string>();
-stringStrage.addItem("test");
-stringStrage.addItem("test2");
-stringStrage.addItem("test3");
-stringStrage.removeItem("test2");
-
-console.log(stringStrage.getItems());
+const pers = new Person();
+console.log(pers);

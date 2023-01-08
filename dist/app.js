@@ -1,50 +1,34 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var Logger = function (logString) {
+    return function (constructor) {
+        console.log(logString);
+        console.log(constructor);
+    };
+};
+var WithTemplate = function (template, hookId) {
+    return function (_) {
+        var hookEl = document.getElementById(hookId);
+        if (hookEl) {
+            hookEl.innerHTML = template;
         }
+    };
+};
+var Person = (function () {
+    function Person() {
+        this.name = "taiki";
+        console.log("Personオブジェクトを作成中...");
     }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
-var merge = function (objA, objB) {
-    return Object.assign(objA, objB);
-};
-var mergedObj = merge({ name: "Max" }, { age: 30 });
-console.log(mergedObj);
-var countAndDescribe = function (element) {
-    var descriptionText = element.length > 0 ? "\u5024\u306F".concat(element.length, "\u500B\u3067\u3059\u3002") : "値がありません";
-    return [element, descriptionText];
-};
-console.log(countAndDescribe("お疲れさまでした。"));
-console.log(countAndDescribe(["1こ", "２こ"]));
-var extactAndConvert = function (obj, key) {
-    return "Value: " + obj[key];
-};
-extactAndConvert({ name: "taiki" }, "name");
-var DataStrage = (function () {
-    function DataStrage() {
-        this.data = [];
-    }
-    DataStrage.prototype.addItem = function (item) {
-        this.data.push(item);
-    };
-    DataStrage.prototype.removeItem = function (item) {
-        console.log(this.data.indexOf(item));
-        if (this.data.indexOf(item) < 0)
-            return;
-        this.data.splice(this.data.indexOf(item), 1);
-    };
-    DataStrage.prototype.getItems = function () {
-        return __spreadArray([], this.data, true);
-    };
-    return DataStrage;
+    Person = __decorate([
+        WithTemplate("<h1>Personオブジェクト</h1>", "app")
+    ], Person);
+    return Person;
 }());
-var stringStrage = new DataStrage();
-stringStrage.addItem("test");
-stringStrage.addItem("test2");
-stringStrage.addItem("test3");
-stringStrage.removeItem("test2");
-console.log(stringStrage.getItems());
+var pers = new Person();
+console.log(pers);
 //# sourceMappingURL=app.js.map
