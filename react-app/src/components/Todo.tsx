@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
 const Todo = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<string[]>([]);
   const [todoTitle, setTodoTitle] = useState("");
 
-  const todoSubmitHandler = (e) => {
+  const todoSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     setTodos([todoTitle, ...todos]);
   };
 
-  const deleteTodo = (e) => {
-    const index = e.target.getAttribute("data-key");
+  const deleteTodo = (e: React.MouseEvent) => {
+    const index = +(e.target as HTMLElement).getAttribute("data-key")!;
     const copyTodos = [...todos];
     copyTodos.splice(index, 1);
     setTodos(copyTodos);
