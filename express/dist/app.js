@@ -4,11 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const todos_1 = __importDefault(require("./routes/todos"));
+const body_parser_1 = require("body-parser");
 const app = (0, express_1.default)();
+app.use((0, body_parser_1.json)());
 const PORT = 3000;
-app.get("/", (req, res) => {
-    res.status(200).json({ status: "Accessed!" });
+app.use("/todos", todos_1.default);
+app.use((err, req, res, next) => {
+    res.status(500).json({ message: err.message });
 });
-app.listen(PORT, () => {
-    console.log("starting server...");
-});
+app.listen(PORT);
